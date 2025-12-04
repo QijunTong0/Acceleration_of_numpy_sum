@@ -19,18 +19,12 @@ def test_equivalent_output(matrix, dropout):
 
 
 @pytest.mark.benchmark(group="Random Dropout")
-@pytest.mark.parametrize(
-    "matrix, dropout",
-    [(Mat, Mask)],
-)
+@pytest.mark.parametrize("matrix, dropout", [(Mat, Mask)], ids=["fully_random_dropout"])
 def test_np_prod_sum(benchmark, matrix, dropout):
     benchmark(np_prod_sum, matrix, dropout)
 
 
 @pytest.mark.benchmark(group="Random Dropout")
-@pytest.mark.parametrize(
-    "matrix, dropout",
-    [(Mat, Mask)],
-)
+@pytest.mark.parametrize("matrix, dropout", [(Mat, Mask)], ids=["fully_random_dropout"])
 def test_np_einsum(benchmark, matrix, dropout):
     benchmark(np_einsum, matrix, dropout)
