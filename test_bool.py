@@ -3,7 +3,7 @@ from module import *
 import pytest
 
 
-Mat, Mask = setup_data(N=8192, dtype=np.bool_)
+Mat, Mask = setup_data_col_dropout(N=8192, dtype=np.bool_)
 
 
 @pytest.mark.parametrize(

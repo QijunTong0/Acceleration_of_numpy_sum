@@ -1,27 +1,18 @@
 import numpy as np
 
 
-def setup_data(dtype, N=5000):
+def setup_data_col_dropout(dtype, N=5000):
     """
-    検証用のデータを作成します。
-    A: NxNのランダム行列
-    b: 全てが1のベクトル (単純和の代用)
-    cond: 0か1のランダムベクトル (条件付き和のマスク)
-    cond_bool: ブール型の条件ベクトル
+    列単位での
     """
-
-    # 0~100の範囲でランダムな整数を生成し、指定されたdtypeに変換
-    # 記事に合わせて randint を使用しつつ dtype をキャスト
     A = np.random.randint(0, 100, size=(N, N)).astype(dtype)
-
-    # 条件付き和用のベクトル (0 or 1)
-    # np.dot用には数値型(0, 1)が必要
     dropout = np.random.randint(0, 2, size=N).astype(dtype=np.bool_)
+    return A, dropout
 
-    # np.sum やフィルタリング用にはbool型やそのままの型を使用
-    # (A * cond) の計算用に形状を合わせる（ブロードキャスト用）
-    # condは1次元なのでそのままで行ごとの演算にブロードキャスト可能
 
+def setup_data_random_dropout(dtype, N=5000):
+    A = np.random.randint(0, 100, size=(N, N)).astype(dtype)
+    dropout = np.random.randint(0, 2, size=(N, N)).astype(dtype=np.bool_)
     return A, dropout
 
 
@@ -62,3 +53,11 @@ def np_bitcount(A: np.ndarray, dropout=None):
         A_view64 = A_packed.view(np.uint64)
         counts = np.bitwise_count(A_view64)
         return counts.sum(axis=1)
+
+
+def np_prod_sum(A: np.ndarray, dropout: np.ndarray):
+    return (A * dropout).sum(axis=1)
+
+
+def np_einsum(A: np.ndarray, dropout: np.ndarray):
+    return np.einsum("ij,ij->i", A, dropout)
