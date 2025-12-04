@@ -32,6 +32,13 @@ def np_sum(A: np.ndarray, dropout=None):
         return A.sum(axis=1)
 
 
+def np_sum_indexing(A: np.ndarray, dropout=None):
+    if dropout is not None:
+        return A[:, dropout].sum(axis=1)
+    else:
+        return A.sum(axis=1)
+
+
 def np_dot(A: np.ndarray, dropout=None):
     if dropout is not None:
         return np.dot(A, dropout)
