@@ -1,5 +1,5 @@
 def main():
-    print("Hello from acceleration-of-numpy-sum!")
+    print("Hello from acceleration-of-numpy-sum")
 
 
 if __name__ == "__main__":
